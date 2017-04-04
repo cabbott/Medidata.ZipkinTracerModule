@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.Owin;
 using Medidata.ZipkinTracer.Core.Helpers;
+using System.Web;
 
 namespace Medidata.ZipkinTracer.Core
 {
@@ -45,7 +45,7 @@ namespace Medidata.ZipkinTracer.Core
         /// </summary>
         /// <param name="config">ZipkinConfig instance</param>
         /// <param name="context">the IOwinContext</param>
-        internal TraceProvider(IZipkinConfig config, IOwinContext context = null)
+        internal TraceProvider(IZipkinConfig config, HttpContextBase context = null)
         {
             string headerTraceId = null;
             string headerSpanId = null;
@@ -55,8 +55,9 @@ namespace Medidata.ZipkinTracer.Core
 
             if (context != null)
             {
-                object value;
-                if (context.Environment.TryGetValue(Key, out value))
+                var value = context.Items?[Key];
+
+                if (value != null)
                 {
                     // set properties from context's item.
                     var provider = (ITraceProvider)value;
@@ -73,7 +74,7 @@ namespace Medidata.ZipkinTracer.Core
                 headerParentSpanId = context.Request.Headers[ParentSpanIdHeaderName];
                 headerSampled = context.Request.Headers[SampledHeaderName];
 
-                requestPath = context.Request.Path.ToString();
+                requestPath = context.Request.Path;
             }
             
             TraceId = headerTraceId.IsParsableTo128Or64Bit() ? headerTraceId : GenerateNewTraceId(config.Create128BitTraceId);
@@ -86,7 +87,7 @@ namespace Medidata.ZipkinTracer.Core
                 throw new ArgumentException("x-b3-SpanId and x-b3-ParentSpanId must not be the same value.");
             }
 
-            context?.Environment.Add(Key, this);
+            context?.Items?.Add(Key, this);
         }
 
         /// <summary>
