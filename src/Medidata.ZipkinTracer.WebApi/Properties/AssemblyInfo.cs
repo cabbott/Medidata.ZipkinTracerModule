@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Medidata.ZipkinTracer.Owin")]
-[assembly: AssemblyDescription("Owin-specific functionality for the Zipkin tracer module from Medidata.")]
+[assembly: AssemblyTitle("Medidata.ZipkinTracer.WebApi")]
+[assembly: AssemblyDescription("ASP.NET WebApi-specific functionality for the Zipkin tracer module from Medidata.")]
 [assembly: AssemblyCompany("Medidata Solutions, Inc.")]
 [assembly: AssemblyProduct("Medidata.ZipkinTracerModule")]
 [assembly: AssemblyCopyright("Copyright © Medidata Solutions, Inc. 2017")]
@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 #endif
 
 [assembly: ComVisible(false)]
-[assembly: Guid("86dff8d6-dfea-4d7f-9e57-0709397059b7")]
+[assembly: Guid("ba59dd84-ef64-45dc-bc60-5cf3ed7929c7")]
 
 [assembly: AssemblyVersion("4.0.0")]
 [assembly: AssemblyFileVersion("4.0.0")]
