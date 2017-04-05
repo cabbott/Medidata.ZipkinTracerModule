@@ -6,8 +6,9 @@ using Rhino.Mocks;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Collections.Specialized;
+using Medidata.ZipkinTracer.Core;
 
-namespace Medidata.ZipkinTracer.Core.Test
+namespace Medidata.ZipkinTracer.Tests
 {
     [TestClass]
     public class TraceProviderTests

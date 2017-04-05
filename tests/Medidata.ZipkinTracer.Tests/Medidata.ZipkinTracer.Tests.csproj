@@ -7,8 +7,8 @@
     <ProjectGuid>{0158C8BD-D881-4EE8-A8C6-54707A67A00D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Medidata.ZipkinTracer.Core.Test</RootNamespace>
-    <AssemblyName>Medidata.ZipkinTracer.Core.Test</AssemblyName>
+    <RootNamespace>Medidata.ZipkinTracer.Tests</RootNamespace>
+    <AssemblyName>Medidata.ZipkinTracer.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
