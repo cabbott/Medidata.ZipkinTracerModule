@@ -10,7 +10,10 @@ namespace Medidata.ZipkinTracer.Owin
 {
     internal static class ZipkinTracerOwinExtensions
     {
+        private static readonly string httpContextBaseKey = "System.Web.HttpContextBase";
+
         public static HttpContextBase ToHttpContext(this IOwinContext owinContext) =>
-            owinContext.Environment["System.Web.HttpContextBase"] as HttpContextBase;
+            owinContext.Environment.ContainsKey(httpContextBaseKey) ?
+            owinContext.Environment[httpContextBaseKey] as HttpContextBase : null;
     }
 }

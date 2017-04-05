@@ -8,10 +8,12 @@ namespace Medidata.ZipkinTracer.Owin
     public class ZipkinMiddleware : OwinMiddleware
     {
         private readonly IZipkinConfig _config;
+        private readonly SpanCollector _collector;
 
-        public ZipkinMiddleware(OwinMiddleware next, IZipkinConfig options) : base(next)
+        public ZipkinMiddleware(OwinMiddleware next, IZipkinConfig options, SpanCollector collector = null) : base(next)
         {
             _config = options;
+            _collector = collector;
         }
 
         public override async Task Invoke(IOwinContext context)
@@ -24,7 +26,7 @@ namespace Medidata.ZipkinTracer.Owin
                 return;
             }
 
-            var zipkin = new ZipkinClient(_config, httpContext);
+            var zipkin = new ZipkinClient(_config, httpContext, _collector);
             var span = zipkin.StartServerTrace(context.Request.Uri, context.Request.Method);
             await Next.Invoke(context);
             zipkin.EndServerTrace(span);
@@ -33,10 +35,10 @@ namespace Medidata.ZipkinTracer.Owin
 
     public static class AppBuilderExtensions
     {
-        public static void UseZipkin(this IAppBuilder app, IZipkinConfig config)
+        public static void UseZipkin(this IAppBuilder app, IZipkinConfig config, SpanCollector collector = null)
         {
             config.Validate();
-            app.Use<ZipkinMiddleware>(config);
+            app.Use<ZipkinMiddleware>(config, collector);
         }
     }
 }
