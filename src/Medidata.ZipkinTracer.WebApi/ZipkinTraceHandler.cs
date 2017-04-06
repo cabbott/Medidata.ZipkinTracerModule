@@ -11,16 +11,19 @@ namespace Medidata.ZipkinTracer.WebApi
     public class ZipkinTraceHandler: DelegatingHandler
     {
 		private readonly IZipkinConfig config;
+        private readonly SpanCollector collector;
 
-        public ZipkinTraceHandler(IZipkinConfig config): base()
+        public ZipkinTraceHandler(IZipkinConfig config, SpanCollector collector = null): base()
         {
             this.config = config;
+            this.collector = collector;
         }
 
-        public ZipkinTraceHandler(IZipkinConfig config, HttpMessageHandler innerHandler)
+        public ZipkinTraceHandler(IZipkinConfig config, HttpMessageHandler innerHandler, SpanCollector collector = null)
             : base(innerHandler)
         {
             this.config = config;
+            this.collector = collector;
         }
 
         protected async override Task<HttpResponseMessage> SendAsync(
@@ -29,13 +32,13 @@ namespace Medidata.ZipkinTracer.WebApi
             if (InnerHandler == null)
                 InnerHandler = new HttpClientHandler();
 
-            var context = new HttpContextWrapper(HttpContext.Current);
+            var context = HttpContextContainer.Current;
 
             if (config.Bypass?.Invoke(context.Request) ?? false)
                 return await base.SendAsync(request, cancellationToken)
                 .ConfigureAwait(continueOnCapturedContext: false);
 
-            var zipkin = new ZipkinClient(config, context);
+            var zipkin = new ZipkinClient(config, context, collector);
             var span = zipkin.StartServerTrace(context.Request.Url, context.Request.HttpMethod);
 
             var result = await base.SendAsync(request, cancellationToken)

@@ -88,7 +88,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Helpers\ParserHelperTests.cs" />
+    <Compile Include="Handlers\HttpContextInjectorHandler.cs" />
+    <Compile Include="Handlers\HttpContextInjectorMiddleware.cs" />
     <Compile Include="Models\Serialization\Json\JsonSpanTests.cs" />
+    <Compile Include="Handlers\TestMessageHandler.cs" />
+    <Compile Include="WebApiTests.cs" />
     <Compile Include="OwinTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpanCollectorTests.cs" />
@@ -108,6 +112,10 @@
     <ProjectReference Include="..\..\src\Medidata.ZipkinTracer.Owin\Medidata.ZipkinTracer.Owin.csproj">
       <Project>{86DFF8D6-DFEA-4D7F-9E57-0709397059B7}</Project>
       <Name>Medidata.ZipkinTracer.Owin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Medidata.ZipkinTracer.WebApi\Medidata.ZipkinTracer.WebApi.csproj">
+      <Project>{c552dc79-0419-4fda-908c-6d260f41fd4c}</Project>
+      <Name>Medidata.ZipkinTracer.WebApi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
