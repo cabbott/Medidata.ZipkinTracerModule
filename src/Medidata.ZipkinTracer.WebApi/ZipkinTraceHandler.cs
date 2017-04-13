@@ -36,7 +36,7 @@ namespace Medidata.ZipkinTracer.WebApi
 
             if (config.Bypass?.Invoke(context.Request) ?? false)
                 return await base.SendAsync(request, cancellationToken)
-                .ConfigureAwait(continueOnCapturedContext: false);
+                    .ConfigureAwait(continueOnCapturedContext: false);
 
             var zipkin = new ZipkinClient(config, context, collector);
             var span = zipkin.StartServerTrace(context.Request.Url, context.Request.HttpMethod);

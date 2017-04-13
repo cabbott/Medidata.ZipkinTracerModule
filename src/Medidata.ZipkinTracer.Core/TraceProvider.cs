@@ -39,7 +39,6 @@ namespace Medidata.ZipkinTracer.Core
         /// </summary>
         public bool IsSampled { get; }
 
-        // TODO: Make another constructor to accept System.Web.HttpContext for non Owin applications
         /// <summary>
         /// Initializes a new instance of the TraceProvider class.
         /// </summary>

@@ -32,8 +32,8 @@ namespace Medidata.ZipkinTracer.Tests
             var httpContext = MockRepository.GenerateMock<HttpContextBase>();
             httpContext.Stub(x => x.Request).Return(httpRequest);
 
-            if (!context.Environment.ContainsKey(ZipkinTracerOwinExtensions.HttpContextBaseKey))
-                context.Environment.Add(ZipkinTracerOwinExtensions.HttpContextBaseKey, httpContext);
+            if (!context.Environment.ContainsKey(typeof(HttpContextBase).FullName))
+                context.Environment.Add(typeof(HttpContextBase).FullName, httpContext);
 
             await Next.Invoke(context);
         }
