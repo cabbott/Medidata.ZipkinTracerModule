@@ -5,7 +5,7 @@ using Owin;
 
 namespace Medidata.ZipkinTracer.Owin
 {
-    public class ZipkinMiddleware : OwinMiddleware
+    internal class ZipkinMiddleware : OwinMiddleware
     {
         private readonly IZipkinConfig _config;
         private readonly SpanCollector _collector;
@@ -35,7 +35,13 @@ namespace Medidata.ZipkinTracer.Owin
 
     public static class AppBuilderExtensions
     {
-        public static void UseZipkin(this IAppBuilder app, IZipkinConfig config, SpanCollector collector = null)
+        public static void UseZipkin(this IAppBuilder app, IZipkinConfig config)
+        {
+            config.Validate();
+            app.Use<ZipkinMiddleware>(config, null);
+        }
+
+        internal static void UseZipkin(this IAppBuilder app, IZipkinConfig config, SpanCollector collector)
         {
             config.Validate();
             app.Use<ZipkinMiddleware>(config, collector);
