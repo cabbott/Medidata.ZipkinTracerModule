@@ -1,19 +1,16 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using Medidata.ZipkinTracer.Core;
 
 namespace Medidata.ZipkinTracer.WebApi
 {
     public class ZipkinTraceHandler: DelegatingHandler
     {
-		private readonly IZipkinConfig config;
+        private readonly IZipkinConfig config;
         private readonly SpanCollector collector;
 
-        public ZipkinTraceHandler(IZipkinConfig config, SpanCollector collector = null): base()
+        public ZipkinTraceHandler(IZipkinConfig config, SpanCollector collector = null) : base()
         {
             this.config = config;
             this.collector = collector;
